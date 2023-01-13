@@ -1,5 +1,4 @@
 const {
-  contactsPath,
   listContacts,
   getContactById,
   removeContact,
