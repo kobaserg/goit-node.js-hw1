@@ -1,4 +1,5 @@
 const fs = require("fs").promises;
+const { LOADIPHLPAPI } = require("dns");
 const path = require("path");
 
 const contactsPath = path.resolve("db/contacts.json");
@@ -39,11 +40,12 @@ async function removeContact(contactId) {
   try {
     const contacts = await fs.readFile(contactsPath, "utf8");
     const contList = JSON.parse(contacts);
-    let arrayId = [];
-    contList.map((cont) => {
-      arrayId.push(Number(cont.id));
-    });
-    const indexRemoveId = arrayId.indexOf(contactId);
+    const indexRemoveId = contList.findIndex(
+      (cont) => Number(cont.id) === contactId
+    );
+
+    console.log(indexRemoveId);
+
     if (indexRemoveId !== -1) {
       contList.splice(indexRemoveId, 1);
       await fs.writeFile(contactsPath, JSON.stringify(contList), "utf8");
@@ -59,11 +61,7 @@ async function addContact(name, email, phone) {
   try {
     const contacts = await fs.readFile(contactsPath, "utf8");
     const contList = JSON.parse(contacts);
-    let arrayId = [];
-    contList.map((cont) => {
-      arrayId.push(Number(cont.id));
-    });
-    const maxId = Math.max(...arrayId);
+    const maxId = Math.max(...contList.map((cont) => Number(cont.id)));
     const newContact = {
       id: String(maxId + 1),
       name,
