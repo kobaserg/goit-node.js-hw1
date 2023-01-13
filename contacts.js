@@ -43,9 +43,6 @@ async function removeContact(contactId) {
     const indexRemoveId = contList.findIndex(
       (cont) => Number(cont.id) === contactId
     );
-
-    console.log(indexRemoveId);
-
     if (indexRemoveId !== -1) {
       contList.splice(indexRemoveId, 1);
       await fs.writeFile(contactsPath, JSON.stringify(contList), "utf8");
