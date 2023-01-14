@@ -1,5 +1,4 @@
 const fs = require("fs").promises;
-const { LOADIPHLPAPI } = require("dns");
 const path = require("path");
 
 const contactsPath = path.resolve("db/contacts.json");
