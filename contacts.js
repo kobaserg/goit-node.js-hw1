@@ -8,11 +8,7 @@ async function listContacts() {
   try {
     const contacts = await fs.readFile(contactsPath, "utf8");
     const contList = JSON.parse(contacts);
-    contList.map((cont) => {
-      console.log(
-        `ID: ${cont.id} ${cont.name}   ${cont.email}   ${cont.phone}`
-      );
-    });
+    console.table(contList);
   } catch (error) {
     console.log(error);
   }
@@ -25,9 +21,7 @@ async function getContactById(contactId) {
     const contId = contList.filter((cont) => Number(cont.id) === contactId);
 
     if (contId.length !== 0) {
-      console.log(
-        `ID: ${contId[0].id} ${contId[0].name} ${contId[0].email} ${contId[0].phone}`
-      );
+      console.table(contId);
     } else {
       console.log("ID not found");
     }
@@ -67,6 +61,7 @@ async function addContact(name, email, phone) {
     };
     contList.push(newContact);
     await fs.writeFile(contactsPath, JSON.stringify(contList), "utf8");
+    console.table(newContact);
   } catch (error) {
     console.log(error);
   }
